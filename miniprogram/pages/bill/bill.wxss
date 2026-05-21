@@ -109,23 +109,27 @@
   background: #FBF1E2;
   border: 2rpx solid #E8DCCB;
   border-radius: 16rpx;
-  padding: 20rpx 28rpx;
+  padding: 0 28rpx;
+  height: 120rpx;
   margin-bottom: 20rpx;
 }
 
 .symbol {
-  font-size: 48rpx;
+  font-size: 44rpx;
   color: #A0341A;
-  margin-right: 16rpx;
+  margin-right: 12rpx;
   font-weight: 500;
+  line-height: 1;
 }
 
 .input {
   flex: 1;
-  font-size: 60rpx;
+  font-size: 56rpx;
   font-weight: 500;
   color: #A0341A;
   letter-spacing: 2rpx;
+  height: 120rpx;
+  line-height: 120rpx;
 }
 
 .quick-discount {

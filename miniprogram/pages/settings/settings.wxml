@@ -1,0 +1,72 @@
+<view class="page">
+  <view class="card stats" wx:if="{{stats}}">
+    <view class="card-title">数据概况</view>
+    <view class="stat-row"><view>菜品</view><view>{{stats.dishes}}</view></view>
+    <view class="stat-row"><view>桌位</view><view>{{stats.tables}}</view></view>
+    <view class="stat-row"><view>历史订单</view><view>{{stats.tickets}}</view></view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">预设备注</view>
+    <view class="hint">点菜时可一键勾选这些备注，全店通用</view>
+    <view class="tag-list">
+      <view class="tag-row" wx:for="{{presetNotes}}" wx:key="*this">
+        <view class="tag">{{item}}</view>
+        <view class="tag-del" data-note="{{item}}" bindtap="removeNote">×</view>
+      </view>
+    </view>
+    <view class="add-row">
+      <input class="input" placeholder="新增备注（如：少糖）" value="{{newNote}}" bindinput="onNewNote"/>
+      <view class="btn-add-tag" bindtap="addNote">+</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">硬件设备</view>
+    <view class="hint">连接蓝牙小票打印机，自动出后厨联和顾客联</view>
+    <view class="btn-pri" bindtap="goPrinter">打印机设置</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">数据备份</view>
+    <view class="hint">建议每天闭店时备份一次，防止数据丢失</view>
+    <view class="btn-pri" bindtap="onExport">导出数据</view>
+    <view class="btn-sec" bindtap="onImport">恢复数据</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">危险操作</view>
+    <view class="btn-danger" bindtap="onClearAll">清空所有数据并重置</view>
+  </view>
+
+  <view class="tip">
+    本应用所有数据均保存在你的手机本地，不上传服务器。卸载小程序或清除微信缓存会丢失数据，请定期备份。
+  </view>
+
+  <view wx:if="{{showExport}}" class="modal">
+    <view class="mask" bindtap="closeExport"></view>
+    <view class="sheet">
+      <view class="sheet-title">导出数据</view>
+      <textarea class="textarea" value="{{exportText}}" disabled="true" auto-height="true"/>
+      <view class="row-btns">
+        <view class="btn-pri half" bindtap="onCopy">复制</view>
+        <view class="btn-sec half" bindtap="onSaveFile">保存为文件</view>
+      </view>
+      <view class="btn-text" bindtap="closeExport">关闭</view>
+    </view>
+  </view>
+
+  <view wx:if="{{showImport}}" class="modal">
+    <view class="mask" bindtap="closeImport"></view>
+    <view class="sheet">
+      <view class="sheet-title">恢复数据</view>
+      <view class="hint">从聊天文件选择 .json 备份，或粘贴 JSON 文本</view>
+      <view class="btn-sec" bindtap="onPickFile">从聊天文件选择</view>
+      <textarea class="textarea input" placeholder="或在此粘贴 JSON 数据" value="{{importText}}" bindinput="onImportInput"/>
+      <view class="row-btns">
+        <view class="btn-text half" bindtap="closeImport">取消</view>
+        <view class="btn-pri half" bindtap="onConfirmImport">确认恢复</view>
+      </view>
+    </view>
+  </view>
+</view>

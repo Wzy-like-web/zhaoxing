@@ -1,0 +1,55 @@
+<view class="page">
+  <!-- 顶部横幅 -->
+  <view class="hero">
+    <view class="hero-mark">兆</view>
+    <view class="hero-title">兆兴</view>
+    <view class="hero-sub">牛羊肉泡馍 · 蒜香羊肉</view>
+  </view>
+
+  <!-- 营收概览 -->
+  <view class="summary">
+    <view class="sum-card primary">
+      <view class="sum-label">今日营业额</view>
+      <view class="sum-value">¥{{todayRevenue}}</view>
+    </view>
+    <view class="sum-card">
+      <view class="sum-label">单数</view>
+      <view class="sum-value">{{todayCount}}</view>
+    </view>
+    <view class="sum-card">
+      <view class="sum-label">用餐中</view>
+      <view class="sum-value">{{occupiedCount}}</view>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view class="title">桌位</view>
+    <view class="actions">
+      <view class="btn-ghost" bindtap="onAddTable">＋ 加桌</view>
+      <view class="btn-ghost" bindtap="goSettings">设置</view>
+    </view>
+  </view>
+
+  <view wx:if="{{tables.length === 0}}" class="empty">还没有桌位，点上方添加</view>
+
+  <view wx:else class="grid">
+    <view
+      wx:for="{{tables}}"
+      wx:key="_id"
+      class="tile {{item.occupied ? 'occupied' : 'free'}}"
+      data-table="{{item}}"
+      bindtap="onTapTable">
+      <view class="tile-tag" wx:if="{{item.occupied}}">{{item.ticketCount}} 拨</view>
+      <view class="tile-name">{{item.name}}</view>
+      <block wx:if="{{item.occupied}}">
+        <view class="tile-numbers">{{item.numbersText}}</view>
+        <view class="tile-amount">¥{{item.amount}}</view>
+        <view class="tile-time">{{item.elapsed}} 分钟</view>
+      </block>
+      <view wx:else class="tile-status">
+        <view class="dot"></view>
+        空闲
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>西北小馆 · 商家自用版预览</title>
+<style>
+  :root {
+    --primary: #A0341A;
+    --primary-deep: #7A2614;
+    --primary-soft: #F8E5DD;
+    --accent: #C28952;
+    --accent-soft: #FBF1E2;
+    --bg: #F5EFE6;
+    --text: #2A1F1A;
+    --muted: #8B7E72;
+    --border: #E8DCCB;
+    --success: #5B7C42;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Noto Serif SC", serif;
+    background: var(--bg);
+    padding: 32px 24px;
+    color: var(--text);
+  }
+  .wrapper { max-width: 1500px; margin: 0 auto; }
+  h1 { font-size: 26px; font-weight: 500; margin-bottom: 6px; letter-spacing: 4px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; letter-spacing: 2px; }
+
+  .stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 24px;
+  }
+  .phone {
+    background: #1a1a1a;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 12px 36px rgba(160,52,26,0.15);
+  }
+  .screen {
+    background: var(--bg);
+    border-radius: 28px;
+    overflow: hidden;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .status-bar {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 20px 8px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-bar {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 20px;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    letter-spacing: 4px;
+  }
+  .nav-bar .back {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: rgba(255,255,255,0.85); font-size: 18px;
+  }
+  .phone-label {
+    text-align: center;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .body { flex: 1; overflow-y: auto; }
+  .body-pad { padding: 12px; }
+
+  .tabbar {
+    display: flex;
+    background: #fff;
+    padding: 6px 0;
+    border-top: 1px solid var(--border);
+  }
+  .tabbar .ti { flex: 1; text-align: center; font-size: 11px; color: var(--muted); padding: 4px 0; letter-spacing: 1px; }
+  .tabbar .ti.active { color: var(--primary); font-weight: 500; }
+  .tabbar .ti .ic { font-size: 16px; display: block; margin-bottom: 2px; }
+
+  /* hero - 桌位首页 */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+    color: #fff;
+    padding: 28px 16px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 14px;
+    background: radial-gradient(circle at 7px 0, var(--bg) 7px, transparent 8px) 0 0/14px 14px repeat-x;
+  }
+  .hero-mark {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px;
+    font-size: 20px;
+  }
+  .hero-title { font-size: 22px; font-weight: 500; letter-spacing: 4px; }
+  .hero-sub { font-size: 11px; opacity: 0.85; margin-top: 4px; letter-spacing: 2px; }
+
+  .summary {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 8px;
+    padding: 16px 12px 8px;
+  }
+  .sum-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .sum-card.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: #fff;
+  }
+  .sum-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; letter-spacing: 1px; }
+  .sum-card.primary .sum-label { color: rgba(255,255,255,0.9); }
+  .sum-value { font-size: 20px; font-weight: 500; }
+
+  .sec-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px 12px;
+  }
+  .sec-head .t {
+    font-size: 14px; font-weight: 500;
+    padding-left: 10px;
+    position: relative;
+    letter-spacing: 2px;
+  }
+  .sec-head .t::before {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 16px; background: var(--primary); border-radius: 2px;
+  }
+  .ghost {
+    color: var(--primary); font-size: 11px;
+    border: 1px solid rgba(160,52,26,0.18); padding: 4px 12px;
+    border-radius: 12px; background: rgba(160,52,26,0.05);
+    margin-left: 6px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 12px 12px;
+  }
+  .tile {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 6px;
+    text-align: center;
+    border: 1.5px solid transparent;
+    min-height: 100px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .tile.free { border-color: rgba(91,124,66,0.25); }
+  .tile.occupied {
+    background: linear-gradient(180deg, #FBF1E2 0%, #F5E0CC 100%);
+    border-color: rgba(160,52,26,0.3);
+  }
+  .tile-tag {
+    position: absolute; top: 6px; right: 6px;
+    background: var(--primary); color: #fff;
+    font-size: 9px; padding: 1px 6px;
+    border-radius: 8px;
+  }
+  .tile .name { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .tile.occupied .name { color: var(--primary-deep); }
+  .tile .free-tag {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: 11px; color: var(--success);
+  }
+  .tile .free-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--success); box-shadow: 0 0 0 3px rgba(91,124,66,0.18);
+  }
+  .tile .nums { font-size: 10px; color: var(--primary); font-weight: 500; margin-bottom: 2px; letter-spacing: 1px; }
+  .tile .amt { font-size: 14px; font-weight: 500; color: var(--primary-deep); }
+  .tile .min { font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+  /* 点菜页 */
+  .order-head { background: #fff; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .order-head .name { font-size: 18px; font-weight: 500; letter-spacing: 2px; }
+  .order-head .stat { font-size: 11px; color: var(--primary); margin-top: 2px; letter-spacing: 1px; }
+  .order-body { flex: 1; display: flex; overflow: hidden; }
+  .cat-bar {
+    width: 70px;
+    background: rgba(160,52,26,0.06);
+    overflow-y: auto;
+  }
+  .cat {
+    padding: 12px 4px; text-align: center;
+    font-size: 11px; color: var(--muted);
+    border-left: 3px solid transparent;
+  }
+  .cat.active {
+    background: var(--bg); color: var(--primary); font-weight: 500;
+    border-left-color: var(--primary);
+  }
+  .dishes {
+    flex: 1; padding: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    overflow-y: auto; align-content: start;
+  }
+  .dish-btn {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 8px;
+    text-align: center;
+    position: relative;
+    min-height: 80px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .dish-btn::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(160,52,26,0.2);
+    border-radius: 8px;
+  }
+  .dish-btn .nm { font-size: 15px; font-weight: 500; letter-spacing: 1px; margin-bottom: 4px; }
+  .dish-btn .pr { font-size: 12px; color: var(--primary); font-weight: 500; }
+
+  .bot-bar {
+    background: var(--text);
+    color: #fff;
+    padding: 8px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cart-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-top: -16px;
+    box-shadow: 0 2px 10px rgba(160,52,26,0.4);
+    position: relative;
+  }
+  .cart-icon .badge {
+    position: absolute; top: -4px; right: -4px;
+    background: #fff; color: var(--primary);
+    font-size: 10px; font-weight: 500;
+    min-width: 16px; height: 16px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .amt-area { flex: 1; }
+  .amt-area .lab { font-size: 9px; color: rgba(255,255,255,0.6); }
+  .amt-area .vl { font-size: 16px; font-weight: 500; color: #F5D58C; letter-spacing: 1px; }
+  .btn-pri {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: #fff;
+    padding: 10px 18px; border-radius: 18px;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* 配料弹层（叠在点菜页底部） */
+  .addon-mask {
+    position: absolute; inset: 0;
+    background: rgba(42,31,26,0.55);
+    z-index: 5;
+  }
+  .addon-sheet {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #FAF6EE;
+    border-radius: 18px 18px 0 0;
+    padding: 16px;
+    z-index: 6;
+    max-height: 65%;
+    overflow-y: auto;
+  }
+  .addon-sheet::before {
+    content: ''; display: block; width: 40px; height: 3px;
+    background: var(--border); border-radius: 2px;
+    margin: 0 auto 12px;
+  }
+  .addon-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 12px; border-bottom: 1px dashed var(--border); margin-bottom: 14px;
+  }
+  .addon-head .nm { font-size: 18px; font-weight: 500; letter-spacing: 2px; }
+  .addon-head .pr { font-size: 16px; color: var(--primary); font-weight: 500; }
+  .sec-title {
+    font-size: 12px; color: var(--muted); margin: 8px 0 8px;
+    padding-left: 8px; position: relative; letter-spacing: 1px;
+  }
+  .sec-title::before {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 12px; background: var(--primary); border-radius: 1px;
+  }
+  .tag-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .chip {
+    background: #fff;
+    color: #5C4D40;
+    padding: 8px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+  }
+  .chip.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    font-weight: 500;
+  }
+  .custom-input {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: var(--muted);
+  }
+  .addon-actions {
+    display: flex; gap: 10px;
+  }
+  .btn-cancel {
+    flex: 1; background: #fff; color: var(--muted);
+    border: 1px solid var(--border);
+    text-align: center; padding: 12px;
+    border-radius: 8px; font-size: 13px;
+  }
+  .btn-confirm {
+    flex: 2;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: #fff;
+    text-align: center; padding: 12px;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    letter-spacing: 2px;
+  }
+
+  /* 出单页 */
+  .check-circle {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--success); color: #fff;
+    font-size: 32px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    margin: 24px auto 12px;
+    box-shadow: 0 4px 14px rgba(91,124,66,0.3);
+  }
+  .success-text {
+    text-align: center; font-size: 14px; font-weight: 500;
+    letter-spacing: 4px; margin-bottom: 16px;
+  }
+  .ticket-paper {
+    background: #fff;
+    margin: 0 16px 16px;
+    padding: 24px 22px 30px;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(160,52,26,0.1);
+  }
+  .ticket-paper::before, .ticket-paper::after {
+    content: '';
+    position: absolute; left: 0; right: 0;
+    height: 10px;
+    background-image:
+      linear-gradient(45deg, transparent 33%, var(--bg) 33%, var(--bg) 66%, transparent 66%),
+      linear-gradient(-45deg, transparent 33%, var(--bg) 33%, var(--bg) 66%, transparent 66%);
+    background-size: 20px 10px;
+  }
+  .ticket-paper::before { top: -10px; }
+  .ticket-paper::after { bottom: -10px; }
+  .paper-head { text-align: center; margin-bottom: 12px; }
+  .shop-name { font-size: 22px; font-weight: 500; letter-spacing: 6px; }
+  .shop-sub { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 2px; }
+  .divider { border-top: 1.5px dashed var(--text); margin: 12px 0; }
+  .divider.double { border-top: 3px double var(--text); }
+  .num-area { text-align: center; padding: 8px 0; }
+  .num-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; }
+  .num-big { font-size: 64px; font-weight: 700; line-height: 1.1; color: var(--primary); letter-spacing: 4px; margin: 4px 0; }
+  .table-line { font-size: 16px; font-weight: 500; letter-spacing: 1px; }
+  .dish-line { display: flex; justify-content: space-between; font-size: 17px; font-weight: 500; padding: 4px 0; letter-spacing: 1px; }
+  .extra { padding-left: 12px; font-size: 13px; line-height: 1.7; }
+  .extra.addon { color: var(--accent); }
+  .extra.note { color: var(--primary); font-weight: 500; }
+  .paper-foot {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted);
+    margin-top: 4px;
+  }
+  .thanks {
+    text-align: center; font-size: 11px;
+    color: var(--muted); margin-top: 12px;
+    letter-spacing: 4px;
+  }
+  .actions-row {
+    display: flex; gap: 8px; padding: 0 16px 12px;
+  }
+  .actions-row > * {
+    flex: 1; text-align: center; padding: 12px;
+    border-radius: 8px; font-size: 12px; font-weight: 500;
+  }
+  .ar-pri {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: #fff; letter-spacing: 1px;
+  }
+  .ar-out {
+    background: var(--accent-soft); color: var(--primary);
+    border: 1px solid var(--accent);
+  }
+  .ar-line {
+    background: #fff; color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* 桌位详情 */
+  .td-head {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .td-head .name { font-size: 22px; font-weight: 500; letter-spacing: 4px; }
+  .td-head .info { font-size: 11px; opacity: 0.85; margin-top: 4px; letter-spacing: 2px; }
+
+  .ticket-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 16px 16px 22px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .ticket-card::before {
+    content: ''; position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 5px;
+    background: linear-gradient(180deg, var(--accent), var(--primary));
+    border-radius: 3px;
+  }
+  .tc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .num-badge {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: #fff;
+    padding: 4px 12px; border-radius: 12px;
+    font-size: 12px; font-weight: 500; letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(160,52,26,0.25);
+  }
+  .tc-meta { flex: 1; font-size: 11px; color: var(--muted); }
+  .tc-amt { font-size: 18px; color: var(--primary); font-weight: 500; }
+  .tc-dishes {
+    border-top: 1.5px dashed var(--border);
+    border-bottom: 1.5px dashed var(--border);
+    padding: 8px 0; margin-bottom: 10px;
+  }
+  .tc-d-row { padding: 4px 0; font-size: 13px; font-weight: 500; }
+  .tc-d-extra { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+  .tag-mini {
+    font-size: 10px; padding: 2px 8px; border-radius: 8px;
+  }
+  .tag-mini.addon { background: var(--accent-soft); color: var(--accent); }
+  .tag-mini.note { background: var(--primary-soft); color: var(--primary); }
+  .tc-actions { display: flex; gap: 6px; }
+  .tc-btn {
+    flex: 1; text-align: center; padding: 8px;
+    border-radius: 8px; font-size: 12px; font-weight: 500;
+  }
+  .tc-line {
+    background: #fff; color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .tc-out {
+    background: var(--accent-soft); color: var(--primary);
+    border: 1px solid var(--accent);
+  }
+  .tc-pri {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: #fff;
+  }
+  .add-party {
+    background: linear-gradient(135deg, #2A1F1A, #5C4D40);
+    color: #fff;
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>西北小馆 · 商家自用版</h1>
+  <p class="subtitle">牛羊肉泡馍 · 蒜香羊肉</p>
+
+  <div class="stage">
+
+    <!-- 屏 1：桌位首页 -->
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status-bar"><span>9:41</span><span>📶</span></div>
+          <div class="hero">
+            <div class="hero-mark">西</div>
+            <div class="hero-title">西北小馆</div>
+            <div class="hero-sub">牛羊肉泡馍 · 蒜香羊肉</div>
+          </div>
+          <div class="body">
+            <div class="summary">
+              <div class="sum-card primary">
+                <div class="sum-label">今日营业额</div>
+                <div class="sum-value">¥1,286</div>
+              </div>
+              <div class="sum-card">
+                <div class="sum-label">单数</div>
+                <div class="sum-value">23</div>
+              </div>
+              <div class="sum-card">
+                <div class="sum-label">用餐中</div>
+                <div class="sum-value">3</div>
+              </div>
+            </div>
+            <div class="sec-head">
+              <div class="t">桌位</div>
+              <div>
+                <span class="ghost">＋ 加桌</span>
+                <span class="ghost">设置</span>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="tile free"><div class="name">1号桌</div><div class="free-tag">空闲</div></div>
+              <div class="tile occupied">
+                <span class="tile-tag">2 拨</span>
+                <div class="name">2号桌</div>
+                <div class="nums">8号 · 9号</div>
+                <div class="amt">¥56</div>
+                <div class="min">12 分钟</div>
+              </div>
+              <div class="tile occupied">
+                <span class="tile-tag">1 拨</span>
+                <div class="name">3号桌</div>
+                <div class="nums">10号</div>
+                <div class="amt">¥36</div>
+                <div class="min">5 分钟</div>
+              </div>
+              <div class="tile free"><div class="name">4号桌</div><div class="free-tag">空闲</div></div>
+              <div class="tile free"><div class="name">5号桌</div><div class="free-tag">空闲</div></div>
+              <div class="tile occupied">
+                <span class="tile-tag">1 拨</span>
+                <div class="name">6号桌</div>
+                <div class="nums">11号</div>
+                <div class="amt">¥86</div>
+                <div class="min">28 分钟</div>
+              </div>
+            </div>
+          </div>
+          <div class="tabbar">
+            <div class="ti active"><span class="ic">🪑</span>桌位</div>
+            <div class="ti"><span class="ic">📋</span>订单</div>
+            <div class="ti"><span class="ic">💰</span>营收</div>
+            <div class="ti"><span class="ic">🥘</span>菜品</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">桌位总览</div>
+    </div>
+
+    <!-- 屏 2：点菜 + 配料弹层 -->
+    <div>
+      <div class="phone">
+        <div class="screen" style="position: relative;">
+          <div class="status-bar"><span>9:42</span><span>📶</span></div>
+          <div class="nav-bar"><span class="back">‹</span>点菜</div>
+          <div class="order-head">
+            <div class="name">2号桌</div>
+            <div class="stat">为 8号 加菜（已点 ¥56）</div>
+          </div>
+          <div class="order-body">
+            <div class="cat-bar">
+              <div class="cat active">泡馍</div>
+              <div class="cat">羊肉</div>
+              <div class="cat">凉菜</div>
+              <div class="cat">饮品</div>
+            </div>
+            <div class="dishes">
+              <div class="dish-btn"><div class="nm">牛肉泡馍</div><div class="pr">¥28</div></div>
+              <div class="dish-btn"><div class="nm">羊肉泡馍</div><div class="pr">¥32</div></div>
+              <div class="dish-btn"><div class="nm">小炒泡馍</div><div class="pr">¥36</div></div>
+              <div class="dish-btn"><div class="nm">蒜香羊肉</div><div class="pr">¥58</div></div>
+            </div>
+          </div>
+          <div class="bot-bar">
+            <div class="cart-icon">🛒<div class="badge">2</div></div>
+            <div class="amt-area">
+              <div class="lab">本次合计</div>
+              <div class="vl">¥60</div>
+            </div>
+            <div class="btn-pri">加菜出单</div>
+          </div>
+
+          <!-- 弹层叠加 -->
+          <div class="addon-mask"></div>
+          <div class="addon-sheet">
+            <div class="addon-head">
+              <div class="nm">羊肉泡馍</div>
+              <div class="pr">¥32</div>
+            </div>
+            <div class="sec-title">配料</div>
+            <div class="tag-grid">
+              <div class="chip active">加肉 +10</div>
+              <div class="chip">加馍 +3</div>
+              <div class="chip active">多汤</div>
+              <div class="chip">少汤</div>
+              <div class="chip">加香菜</div>
+              <div class="chip active">不要香菜</div>
+            </div>
+            <div class="sec-title">备注</div>
+            <div class="tag-grid">
+              <div class="chip">少盐</div>
+              <div class="chip active">老人吃软一点</div>
+              <div class="chip">打包</div>
+              <div class="chip">加急</div>
+            </div>
+            <div class="sec-title">其他备注（选填）</div>
+            <div class="custom-input">不放葱花</div>
+            <div class="addon-actions">
+              <div class="btn-cancel">取消</div>
+              <div class="btn-confirm">加入订单</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">点菜（含配料弹层）</div>
+    </div>
+
+    <!-- 屏 3：出单 -->
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status-bar"><span>9:43</span><span>📶</span></div>
+          <div class="nav-bar"><span class="back">‹</span>出单</div>
+          <div class="body">
+            <div class="check-circle">✓</div>
+            <div class="success-text">出单成功</div>
+
+            <div class="ticket-paper">
+              <div class="paper-head">
+                <div class="shop-name">西北小馆</div>
+                <div class="shop-sub">牛羊肉泡馍 · 蒜香羊肉</div>
+              </div>
+              <div class="divider double"></div>
+              <div class="num-area">
+                <div class="num-label">取餐号</div>
+                <div class="num-big">8</div>
+                <div class="table-line">2号桌</div>
+              </div>
+              <div class="divider"></div>
+              <div>
+                <div class="dish-line"><span>羊肉泡馍</span><span>×1</span></div>
+                <div class="extra addon">＋ 加肉 (+10)</div>
+                <div class="extra addon">＋ 多汤</div>
+                <div class="extra note">※ 不要香菜</div>
+                <div class="extra note">※ 老人吃软一点</div>
+                <div class="dish-line" style="margin-top: 8px"><span>蒜香羊肉</span><span>×1</span></div>
+                <div class="extra addon">＋ 中辣</div>
+                <div class="extra note">※ 加急</div>
+              </div>
+              <div class="divider"></div>
+              <div class="paper-foot">
+                <span>2026-05-21 09:43</span>
+                <span style="color: var(--text); font-weight: 500">本次 ¥100</span>
+              </div>
+              <div class="thanks">— 感谢光临 —</div>
+            </div>
+          </div>
+          <div class="actions-row">
+            <div class="ar-pri">🖨 蓝牙打印</div>
+            <div class="ar-out">继续加菜</div>
+            <div class="ar-line">完成</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">出单（小票样式）</div>
+    </div>
+
+    <!-- 屏 4：桌位详情 -->
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <div class="status-bar"><span>9:44</span><span>📶</span></div>
+          <div class="nav-bar"><span class="back">‹</span>桌位详情</div>
+          <div class="body body-pad" style="padding-bottom: 70px;">
+            <div class="td-head">
+              <div class="name">2号桌</div>
+              <div class="info">2 拨人在用餐</div>
+            </div>
+
+            <div class="ticket-card">
+              <div class="tc-head">
+                <span class="num-badge">8号</span>
+                <span class="tc-meta">12 分钟 · 3 件</span>
+                <span class="tc-amt">¥100</span>
+              </div>
+              <div class="tc-dishes">
+                <div class="tc-d-row">
+                  羊肉泡馍 ×1
+                  <div class="tc-d-extra">
+                    <span class="tag-mini addon">+加肉</span>
+                    <span class="tag-mini addon">+多汤</span>
+                    <span class="tag-mini note">※不要香菜</span>
+                  </div>
+                </div>
+                <div class="tc-d-row">
+                  蒜香羊肉 ×1
+                  <div class="tc-d-extra">
+                    <span class="tag-mini addon">+中辣</span>
+                    <span class="tag-mini note">※加急</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tc-actions">
+                <div class="tc-btn tc-line">作废</div>
+                <div class="tc-btn tc-out">继续加菜</div>
+                <div class="tc-btn tc-pri">结账</div>
+              </div>
+            </div>
+
+            <div class="ticket-card">
+              <div class="tc-head">
+                <span class="num-badge">9号</span>
+                <span class="tc-meta">5 分钟 · 2 件</span>
+                <span class="tc-amt">¥56</span>
+              </div>
+              <div class="tc-dishes">
+                <div class="tc-d-row">
+                  牛肉泡馍 ×2
+                  <div class="tc-d-extra">
+                    <span class="tag-mini addon">+加馍</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tc-actions">
+                <div class="tc-btn tc-line">作废</div>
+                <div class="tc-btn tc-out">继续加菜</div>
+                <div class="tc-btn tc-pri">结账</div>
+              </div>
+            </div>
+
+            <div class="add-party">＋ 同桌新一拨人</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-label">桌位详情（一桌多号）</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

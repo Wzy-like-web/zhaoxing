@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81">
+  <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 钱币圆 -->
+    <circle cx="40" cy="40" r="26"/>
+    <!-- 内圈 -->
+    <circle cx="40" cy="40" r="18"/>
+    <!-- 中间¥ -->
+    <line x1="33" y1="32" x2="40" y2="40"/>
+    <line x1="47" y1="32" x2="40" y2="40"/>
+    <line x1="40" y1="40" x2="40" y2="50"/>
+    <line x1="33" y1="42" x2="47" y2="42"/>
+    <line x1="33" y1="46" x2="47" y2="46"/>
+  </g>
+</svg>

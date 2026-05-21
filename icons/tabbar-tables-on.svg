@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81">
+  <g fill="none" stroke="#A0341A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 桌面 -->
+    <rect x="14" y="22" width="53" height="14" rx="3"/>
+    <!-- 桌腿 -->
+    <line x1="20" y1="36" x2="18" y2="62"/>
+    <line x1="61" y1="36" x2="63" y2="62"/>
+    <!-- 椅子靠背 -->
+    <line x1="40" y1="14" x2="40" y2="22"/>
+    <line x1="34" y1="14" x2="46" y2="14"/>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<view class="page">
+  <view class="head card">
+    <view class="t-name">{{tableName}}</view>
+    <view class="t-info">{{tickets.length}} 拨人在用餐</view>
+  </view>
+
+  <view class="ticket-list">
+    <view class="ticket card" wx:for="{{tickets}}" wx:key="_id">
+      <view class="t-head">
+        <view class="num-badge">{{item.number}}号</view>
+        <view class="t-meta">{{item.elapsed}} 分钟 · {{item.itemCount}} 件</view>
+        <view class="t-amount">¥{{item.amount}}</view>
+      </view>
+
+      <view class="dish-list">
+        <view class="dish-row" wx:for="{{item.items}}" wx:for-item="d" wx:key="*this">
+          <view class="d-name">{{d.name}} ×{{d.count}}</view>
+          <view class="d-extra" wx:if="{{d.addons.length || d.notes.length || d.customNote}}">
+            <text class="d-addon" wx:for="{{d.addons}}" wx:for-item="a" wx:key="name">+{{a.name}}{{a.price > 0 ? '(+' + a.price + ')' : ''}}</text>
+            <text class="d-note" wx:for="{{d.notes}}" wx:for-item="n" wx:key="*this">※{{n}}</text>
+            <text class="d-note" wx:if="{{d.customNote}}">※{{d.customNote}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="t-actions">
+        <view class="btn-line" data-ticket="{{item}}" bindtap="onCancel">作废</view>
+        <view class="btn-out" data-ticket="{{item}}" bindtap="onContinue">继续加菜</view>
+        <view class="btn-pri" data-ticket="{{item}}" bindtap="onCheckout">结账</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="btn-add-party" bindtap="onAddNewParty">+ 同桌新一拨人</view>
+  </view>
+</view>

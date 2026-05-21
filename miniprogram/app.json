@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/tables/tables",
+    "pages/table-detail/table-detail",
+    "pages/ordering/ordering",
+    "pages/print/print",
+    "pages/bill/bill",
+    "pages/orders/orders",
+    "pages/stats/stats",
+    "pages/dishes/dishes",
+    "pages/settings/settings",
+    "pages/printer-setup/printer-setup"
+  ],
+  "tabBar": {
+    "color": "#8B7E72",
+    "selectedColor": "#A0341A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/tables/tables",
+        "text": "桌位",
+        "iconPath": "images/tabbar/tables.png",
+        "selectedIconPath": "images/tabbar/tables-active.png"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "text": "订单",
+        "iconPath": "images/tabbar/orders.png",
+        "selectedIconPath": "images/tabbar/orders-active.png"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "营收",
+        "iconPath": "images/tabbar/stats.png",
+        "selectedIconPath": "images/tabbar/stats-active.png"
+      },
+      {
+        "pagePath": "pages/dishes/dishes",
+        "text": "菜品",
+        "iconPath": "images/tabbar/dishes.png",
+        "selectedIconPath": "images/tabbar/dishes-active.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#F5EFE6",
+    "navigationBarBackgroundColor": "#A0341A",
+    "navigationBarTitleText": "兆兴牛羊肉泡馍",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "iOS 系统要求用于扫描蓝牙打印机"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"]
+}

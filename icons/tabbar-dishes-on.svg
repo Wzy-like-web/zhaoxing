@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81">
+  <g fill="none" stroke="#A0341A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 蒸汽 -->
+    <path d="M30 14 Q26 22 30 30"/>
+    <path d="M40 12 Q36 22 40 32"/>
+    <path d="M50 14 Q54 22 50 30"/>
+    <!-- 碗 -->
+    <path d="M14 38 L66 38 L60 60 Q56 66 50 66 L30 66 Q24 66 20 60 Z"/>
+    <!-- 碗里横线（汤面） -->
+    <line x1="22" y1="44" x2="58" y2="44"/>
+  </g>
+</svg>

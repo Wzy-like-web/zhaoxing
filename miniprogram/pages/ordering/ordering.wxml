@@ -1,0 +1,131 @@
+<view class="page">
+  <view class="header">
+    <view class="t-name">{{tableName}}</view>
+    <view wx:if="{{mode === 'append' && existingTicket}}" class="t-mode append">
+      为 {{existingTicket.number}} 号加菜（已点 ¥{{existingTicket.totalAmount}}）
+    </view>
+    <view wx:else class="t-mode new">新一号 · 待下单</view>
+  </view>
+
+  <view wx:if="{{dishes.length === 0}}" class="empty">还没有菜品，请到「菜品」添加</view>
+
+  <view wx:else class="content">
+    <scroll-view scroll-y="true" class="cat-bar">
+      <view
+        wx:for="{{categories}}"
+        wx:key="*this"
+        class="cat {{activeCategory === item ? 'active' : ''}}"
+        data-cat="{{item}}"
+        bindtap="onSwitchCategory">
+        {{item}}
+      </view>
+    </scroll-view>
+
+    <scroll-view scroll-y="true" class="dish-scroll">
+      <view class="dish-grid">
+        <block wx:for="{{dishes}}" wx:key="_id">
+          <view
+            wx:if="{{item.category === activeCategory}}"
+            class="dish-btn"
+            data-dish="{{item}}"
+            bindtap="onPickDish">
+            <view class="d-name">{{item.name}}</view>
+            <view class="d-price">¥{{item.price}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="cart-icon" bindtap="showCartSheet">
+      <view class="badge" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+      🛒
+    </view>
+    <view class="amt-area">
+      <view class="amt-label">本次合计</view>
+      <view class="amt-val">¥{{cartAmount}}</view>
+    </view>
+    <view class="btn-submit {{cart.length === 0 ? 'disabled' : ''}}" bindtap="onSubmit">
+      {{mode === 'append' ? '加菜出单' : '下单出单'}}
+    </view>
+  </view>
+
+  <!-- 配料/备注弹层 -->
+  <view wx:if="{{showAddon}}" class="modal">
+    <view class="mask" bindtap="closeAddon"></view>
+    <view class="sheet addon-sheet">
+      <view class="addon-head">
+        <view class="addon-name">{{currentDish.name}}</view>
+        <view class="addon-price">¥{{currentDish.price}}</view>
+      </view>
+
+      <view wx:if="{{addonOptions.length}}" class="section">
+        <view class="sec-title">配料</view>
+        <view class="tag-grid">
+          <view
+            wx:for="{{addonOptions}}"
+            wx:key="name"
+            class="tag-chip {{item.active ? 'active' : ''}}"
+            data-idx="{{index}}"
+            bindtap="toggleAddon">
+            {{item.name}}{{item.price > 0 ? ' +' + item.price : ''}}
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{noteOptions.length}}" class="section">
+        <view class="sec-title">备注</view>
+        <view class="tag-grid">
+          <view
+            wx:for="{{noteOptions}}"
+            wx:key="name"
+            class="tag-chip {{item.active ? 'active' : ''}}"
+            data-idx="{{index}}"
+            bindtap="toggleNote">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="sec-title">其他备注（选填）</view>
+        <input class="custom-input" placeholder="如：老人吃，软一点" value="{{customNote}}" bindinput="onCustomNoteInput"/>
+      </view>
+
+      <view class="addon-actions">
+        <view class="btn-cancel" bindtap="closeAddon">取消</view>
+        <view class="btn-confirm" bindtap="onConfirmAddon">加入订单</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购物车弹层 -->
+  <view wx:if="{{showCart}}" class="modal">
+    <view class="mask" bindtap="hideCartSheet"></view>
+    <view class="sheet cart-sheet">
+      <view class="sheet-title">本次清单</view>
+      <view class="cart-list">
+        <view class="cart-row" wx:for="{{cart}}" wx:key="*this">
+          <view class="c-info">
+            <view class="c-name">{{item.name}}</view>
+            <view class="c-extra" wx:if="{{item.addons.length || item.notes.length || item.customNote}}">
+              <text class="c-addon" wx:for="{{item.addons}}" wx:for-item="a" wx:key="name">+{{a.name}}</text>
+              <text class="c-note" wx:for="{{item.notes}}" wx:for-item="n" wx:key="*this">※{{n}}</text>
+              <text class="c-note" wx:if="{{item.customNote}}">※{{item.customNote}}</text>
+            </view>
+          </view>
+          <view class="c-step">
+            <view class="btn-sub" data-idx="{{index}}" bindtap="onSubInCart">−</view>
+            <view class="c-count">{{item.count}}</view>
+            <view class="btn-add" data-idx="{{index}}" bindtap="onAddInCart">+</view>
+          </view>
+        </view>
+      </view>
+      <view class="cart-foot">
+        <view>合计 <text class="t-price">¥{{cartAmount}}</text></view>
+        <view class="btn-confirm" bindtap="onSubmit">{{mode === 'append' ? '加菜出单' : '下单出单'}}</view>
+      </view>
+    </view>
+  </view>
+</view>

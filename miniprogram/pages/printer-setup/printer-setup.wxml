@@ -1,0 +1,58 @@
+<view class="page">
+  <view wx:if="{{saved}}" class="card connected">
+    <view class="status-icon">✓</view>
+    <view class="connected-info">
+      <view class="ci-label">已连接打印机</view>
+      <view class="ci-name">{{saved.name}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{saved}}" class="actions-block">
+    <view class="btn-pri" bindtap="onTest">测试打印</view>
+    <view class="btn-line" bindtap="onDisconnect">断开 / 更换打印机</view>
+  </view>
+
+  <view wx:else class="card">
+    <view class="empty-state">
+      <view class="big-icon">🖨</view>
+      <view class="empty-title">还没有连接打印机</view>
+      <view class="empty-desc">请确保打印机已开机、蓝牙开启、距离手机 1 米内</view>
+    </view>
+    <view class="btn-pri" bindtap="onScan" wx:if="{{!scanning}}">扫描打印机</view>
+    <view class="btn-pri scanning" wx:else bindtap="onStopScan">扫描中... 点击停止</view>
+  </view>
+
+  <view wx:if="{{scanning || devices.length > 0}}" class="card">
+    <view class="card-title">附近设备</view>
+    <view wx:if="{{devices.length === 0 && scanning}}" class="scanning-tip">
+      <view class="dot-loader"></view>
+      正在搜索...
+    </view>
+    <view class="device-list">
+      <view
+        class="device-row {{connecting === item.deviceId ? 'connecting' : ''}}"
+        wx:for="{{devices}}"
+        wx:key="deviceId"
+        data-dev="{{item}}"
+        bindtap="onPick">
+        <view class="dev-info">
+          <view class="dev-name">{{item.name}}</view>
+          <view class="dev-id">{{item.deviceId}}</view>
+        </view>
+        <view class="dev-rssi">{{item.rssi}} dBm</view>
+        <view class="dev-arrow">{{connecting === item.deviceId ? '连接中...' : '›'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="hint-box">
+    <view class="hint-title">使用提示</view>
+    <view class="hint-line">1. 推荐型号：佳博 GP-58MB III、芯烨 XP-P201（58mm 蓝牙）</view>
+    <view class="hint-line">2. 首次连接：打开打印机蓝牙 → 扫描 → 选择设备</view>
+    <view class="hint-line">3. 之后会自动保存设备，每次打印自动重连</view>
+    <view class="hint-line">4. 中文乱码：请用打印机配置软件把字符集改为 UTF-8</view>
+    <view wx:if="{{isIOS}}" class="hint-line ios-warn">
+      📱 iOS 用户：扫描时需授权「定位权限」（这是苹果系统要求，不会获取你的位置）
+    </view>
+  </view>
+</view>

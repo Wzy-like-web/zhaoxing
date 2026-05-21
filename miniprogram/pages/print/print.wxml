@@ -1,0 +1,56 @@
+<view class="page">
+  <view class="check-icon">✓</view>
+  <view class="success-text">出单成功</view>
+
+  <view wx:if="{{ticket}}" class="ticket-paper">
+    <view class="paper-head">
+      <view class="shop-name">兆兴</view>
+      <view class="shop-sub">牛羊肉泡馍 · 蒜香羊肉</view>
+    </view>
+
+    <view class="divider double"></view>
+
+    <view class="number-area">
+      <view class="num-label">取餐号</view>
+      <view class="number">{{ticket.number}}</view>
+      <view class="table">{{ticket.tableName}}</view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="dish-list">
+      <view class="dish-row" wx:for="{{newItems}}" wx:key="*this">
+        <view class="d-main">
+          <text class="d-name">{{item.name}}</text>
+          <text class="d-count">×{{item.count}}</text>
+        </view>
+        <view wx:if="{{item.addons.length}}" class="d-extra">
+          <view class="extra-line addon" wx:for="{{item.addons}}" wx:for-item="a" wx:key="name">
+            ＋ {{a.name}}{{a.price > 0 ? ' (+' + a.price + ')' : ''}}
+          </view>
+        </view>
+        <view wx:if="{{item.notes.length || item.customNote}}" class="d-extra">
+          <view class="extra-line note" wx:for="{{item.notes}}" wx:for-item="n" wx:key="*this">※ {{n}}</view>
+          <view wx:if="{{item.customNote}}" class="extra-line note">※ {{item.customNote}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="paper-foot">
+      <view class="time">{{dateStr}} {{timeStr}}</view>
+      <view class="amount">本次 ¥{{ticket.totalAmount}}</view>
+    </view>
+
+    <view class="thanks">— 感谢光临 —</view>
+  </view>
+
+  <view class="actions">
+    <view class="btn-pri" bindtap="onPrint">🖨 蓝牙打印</view>
+    <view class="btn-out" bindtap="onContinueOrder">继续加菜</view>
+    <view class="btn-line" bindtap="onBack">完成</view>
+  </view>
+
+  <view class="tip">提示：可截图保存，发到后厨群</view>
+</view>

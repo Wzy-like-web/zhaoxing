@@ -1,0 +1,171 @@
+.page {
+  padding: 24rpx;
+  padding-bottom: 180rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(160,52,26,0.05);
+}
+
+.head {
+  background: linear-gradient(135deg, #C28952 0%, #A0341A 100%);
+  color: #fff;
+}
+
+.head .t-name {
+  font-size: 44rpx;
+  font-weight: 500;
+  letter-spacing: 4rpx;
+}
+
+.head .t-info {
+  font-size: 24rpx;
+  opacity: 0.85;
+  margin-top: 8rpx;
+  letter-spacing: 2rpx;
+}
+
+.ticket {
+  position: relative;
+  padding-left: 36rpx;
+}
+
+.ticket::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 28rpx;
+  bottom: 28rpx;
+  width: 8rpx;
+  background: linear-gradient(180deg, #C28952 0%, #A0341A 100%);
+  border-radius: 4rpx;
+}
+
+.t-head {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.num-badge {
+  background: linear-gradient(135deg, #C28952 0%, #A0341A 100%);
+  color: #fff;
+  padding: 8rpx 24rpx;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  letter-spacing: 2rpx;
+  box-shadow: 0 2rpx 6rpx rgba(160,52,26,0.25);
+}
+
+.t-meta {
+  flex: 1;
+  font-size: 22rpx;
+  color: #8B7E72;
+}
+
+.t-amount {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #A0341A;
+  letter-spacing: 1rpx;
+}
+
+.dish-list {
+  border-top: 2rpx dashed #E8DCCB;
+  border-bottom: 2rpx dashed #E8DCCB;
+  padding: 16rpx 0;
+  margin-bottom: 20rpx;
+}
+
+.dish-row {
+  padding: 10rpx 0;
+}
+
+.d-name {
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.d-extra {
+  font-size: 22rpx;
+  margin-top: 6rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.d-addon {
+  background: #FBF1E2;
+  color: #C28952;
+  padding: 4rpx 14rpx;
+  border-radius: 12rpx;
+}
+
+.d-note {
+  background: #F8E5DD;
+  color: #A0341A;
+  padding: 4rpx 14rpx;
+  border-radius: 12rpx;
+}
+
+.t-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.btn-line,
+.btn-out,
+.btn-pri {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.btn-line {
+  background: #fff;
+  color: #8B7E72;
+  border: 2rpx solid #E8DCCB;
+}
+
+.btn-out {
+  background: #FBF1E2;
+  color: #A0341A;
+  border: 2rpx solid #C28952;
+}
+
+.btn-pri {
+  background: linear-gradient(135deg, #C28952 0%, #A0341A 100%);
+  color: #fff;
+  letter-spacing: 2rpx;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 24rpx 32rpx;
+  border-top: 2rpx solid #E8DCCB;
+  box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.04);
+}
+
+.btn-add-party {
+  background: linear-gradient(135deg, #2A1F1A 0%, #5C4D40 100%);
+  color: #fff;
+  text-align: center;
+  padding: 28rpx;
+  border-radius: 14rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  letter-spacing: 4rpx;
+}

@@ -1,0 +1,55 @@
+<view class="page">
+  <view class="header">
+    <view class="title">菜品管理</view>
+    <view class="btn-add" bindtap="showAdd">+ 添加</view>
+  </view>
+
+  <view wx:if="{{dishes.length === 0}}" class="empty">还没有菜品，点右上角添加</view>
+
+  <view wx:else class="list">
+    <view class="dish-row" wx:for="{{dishes}}" wx:key="_id">
+      <view class="info">
+        <view class="name">{{item.name}}</view>
+        <view class="meta">{{item.category}} · ¥{{item.price}}{{item.addons.length ? ' · ' + item.addons.length + ' 项配料' : ''}}</view>
+        <view class="status-tag {{item.status}}">{{item.status === 'on_sale' ? '在售' : '下架'}}</view>
+      </view>
+      <view class="actions">
+        <view class="btn-mini" data-dish="{{item}}" bindtap="showEdit">编辑</view>
+        <view class="btn-mini" data-dish="{{item}}" bindtap="toggleStatus">{{item.status === 'on_sale' ? '下架' : '上架'}}</view>
+        <view class="btn-mini danger" data-id="{{item._id}}" bindtap="remove">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showForm}}" class="modal">
+    <view class="mask" bindtap="closeForm"></view>
+    <view class="form">
+      <view class="form-title">{{editing ? '编辑菜品' : '添加菜品'}}</view>
+
+      <input class="input" placeholder="菜品名称" value="{{form.name}}" data-field="name" bindinput="onField"/>
+      <input class="input" placeholder="价格" type="digit" value="{{form.price}}" data-field="price" bindinput="onField"/>
+      <input class="input" placeholder="分类（如：汤类/粉面/饮品）" value="{{form.category}}" data-field="category" bindinput="onField"/>
+
+      <view class="sub-title">可选配料</view>
+      <view class="addon-list">
+        <view class="addon-item" wx:for="{{form.addons}}" wx:key="name">
+          <view class="a-name">{{item.name}}</view>
+          <view class="a-price">{{item.price > 0 ? '+¥' + item.price : '免费'}}</view>
+          <view class="a-del" data-idx="{{index}}" bindtap="removeAddon">×</view>
+        </view>
+        <view wx:if="{{form.addons.length === 0}}" class="addon-empty">暂未添加配料</view>
+      </view>
+
+      <view class="addon-input-row">
+        <input class="input small" placeholder="配料名（如：加葱花）" value="{{newAddonName}}" bindinput="onNewAddonName"/>
+        <input class="input small narrow" placeholder="加价" type="digit" value="{{newAddonPrice}}" bindinput="onNewAddonPrice"/>
+        <view class="btn-add-addon" bindtap="addAddon">+</view>
+      </view>
+
+      <view class="form-actions">
+        <view class="btn-cancel" bindtap="closeForm">取消</view>
+        <view class="btn-save" bindtap="save">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,61 @@
+/* ===== 全局主题 ===== */
+page {
+  --color-primary: #A0341A;
+  --color-primary-deep: #7A2614;
+  --color-primary-soft: #F8E5DD;
+  --color-accent: #C28952;
+  --color-accent-soft: #FBF1E2;
+  --color-bg: #F5EFE6;
+  --color-bg-card: #FFFFFF;
+  --color-text: #2A1F1A;
+  --color-text-muted: #8B7E72;
+  --color-text-soft: #B5A99B;
+  --color-border: #E8DCCB;
+  --color-success: #5B7C42;
+  --color-success-soft: #E5EDD9;
+  --color-warning: #C68A2C;
+  --color-warning-soft: #FAEFD8;
+
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Noto Serif SC", serif;
+  font-size: 28rpx;
+}
+
+.card {
+  background: var(--color-bg-card);
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(160, 52, 26, 0.04);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx 36rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+
+.btn-primary[disabled] {
+  background: #ccbeae;
+}
+
+.text-price {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: 24rpx;
+}
+
+.divider-dashed {
+  border-top: 2rpx dashed var(--color-border);
+  margin: 20rpx 0;
+}

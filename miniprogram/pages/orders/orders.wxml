@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tab {{activeTab === 'today' ? 'active' : ''}}" data-tab="today" bindtap="onSwitchTab">今日全部</view>
+    <view class="tab {{activeTab === 'open' ? 'active' : ''}}" data-tab="open" bindtap="onSwitchTab">用餐中</view>
+  </view>
+
+  <view wx:if="{{orders.length === 0}}" class="empty">没有订单</view>
+
+  <view wx:else class="list">
+    <view class="card" wx:for="{{orders}}" wx:key="_id">
+      <view class="card-head">
+        <view class="head-l">
+          <view class="num">{{item.number}}号</view>
+          <view class="table">{{item.tableName}}</view>
+          <view class="time">{{item.time}}</view>
+        </view>
+        <view class="status status-{{item.status}}">{{item.statusLabel}}</view>
+      </view>
+
+      <view class="dishes">
+        <view class="d-row" wx:for="{{item.items}}" wx:for-item="d" wx:key="*this">
+          <view>
+            <view>{{d.name}} ×{{d.count}}</view>
+            <view wx:if="{{d.addons.length || d.notes.length || d.customNote}}" class="d-extra">
+              <text class="d-tag addon" wx:for="{{d.addons}}" wx:for-item="a" wx:key="name">+{{a.name}}</text>
+              <text class="d-tag note" wx:for="{{d.notes}}" wx:for-item="n" wx:key="*this">※{{n}}</text>
+              <text class="d-tag note" wx:if="{{d.customNote}}">※{{d.customNote}}</text>
+            </view>
+          </view>
+          <view class="text-muted">¥{{d.price * d.count}}</view>
+        </view>
+      </view>
+
+      <view class="card-foot">
+        <view class="amount-block">
+          <view class="amount">¥{{item.amount}}</view>
+          <view wx:if="{{item.payLabel}}" class="pay-tag">{{item.payLabel}}</view>
+        </view>
+        <view class="actions">
+          <view wx:if="{{item.status === 'open'}}" class="btn-mini danger" data-id="{{item._id}}" bindtap="onCancel">作废</view>
+          <view wx:if="{{item.status === 'open'}}" class="btn-mini" data-order="{{item}}" bindtap="onContinue">继续点</view>
+          <view wx:if="{{item.status === 'open'}}" class="btn-mini primary" data-id="{{item._id}}" bindtap="onCheckout">结账</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

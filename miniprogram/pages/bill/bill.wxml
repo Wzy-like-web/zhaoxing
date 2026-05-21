@@ -1,0 +1,68 @@
+<view class="page">
+  <block wx:if="{{ticket}}">
+    <view class="head card">
+      <view class="title">{{ticket.tableName}} · {{ticket.number}}号 · 结账</view>
+      <view class="muted">共 {{ticket.items.length}} 项</view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">消费明细</view>
+      <view class="row" wx:for="{{ticket.items}}" wx:key="*this">
+        <view class="r-info">
+          <view>{{item.name}} ×{{item.count}}</view>
+          <view wx:if="{{item.addons.length || item.notes.length || item.customNote}}" class="r-extra">
+            <text class="t-addon" wx:for="{{item.addons}}" wx:for-item="a" wx:key="name">+{{a.name}}{{a.price > 0 ? '(+' + a.price + ')' : ''}}</text>
+            <text class="t-note" wx:for="{{item.notes}}" wx:for-item="n" wx:key="*this">※{{n}}</text>
+            <text class="t-note" wx:if="{{item.customNote}}">※{{item.customNote}}</text>
+          </view>
+        </view>
+        <view class="text-price">¥{{item.price * item.count}}</view>
+      </view>
+      <view class="row total-row">
+        <view>原价合计</view>
+        <view class="text-price big">¥{{ticket.totalAmount}}</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">实收金额</view>
+      <view class="actual-input">
+        <text class="symbol">¥</text>
+        <input
+          class="input"
+          type="digit"
+          value="{{actualAmount}}"
+          bindinput="onActualInput"/>
+      </view>
+      <view class="quick-discount">
+        <view class="discount-btn" data-ratio="{{1}}" bindtap="onQuickDiscount">原价</view>
+        <view class="discount-btn" data-ratio="{{0.95}}" bindtap="onQuickDiscount">95折</view>
+        <view class="discount-btn" data-ratio="{{0.9}}" bindtap="onQuickDiscount">9折</view>
+        <view class="discount-btn" data-ratio="{{0.8}}" bindtap="onQuickDiscount">8折</view>
+        <view class="discount-btn" data-ratio="{{0}}" bindtap="onQuickDiscount">免单</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">收款方式</view>
+      <view class="pay-grid">
+        <view class="pay-item {{payMethod === 'wechat' ? 'active' : ''}}" data-method="wechat" bindtap="onPayMethod">
+          <view class="pay-emoji">💚</view><view>微信</view>
+        </view>
+        <view class="pay-item {{payMethod === 'alipay' ? 'active' : ''}}" data-method="alipay" bindtap="onPayMethod">
+          <view class="pay-emoji">💙</view><view>支付宝</view>
+        </view>
+        <view class="pay-item {{payMethod === 'cash' ? 'active' : ''}}" data-method="cash" bindtap="onPayMethod">
+          <view class="pay-emoji">💵</view><view>现金</view>
+        </view>
+        <view class="pay-item {{payMethod === 'voucher' ? 'active' : ''}}" data-method="voucher" bindtap="onPayMethod">
+          <view class="pay-emoji">🎫</view><view>羊肉票</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="footer">
+      <view class="btn-confirm" bindtap="onConfirm">确认收款 ¥{{actualAmount}}</view>
+    </view>
+  </block>
+</view>

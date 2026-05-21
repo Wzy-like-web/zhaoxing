@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81 81">
+  <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 单据外框 -->
+    <path d="M22 12 L58 12 L58 70 L52 64 L46 70 L40 64 L34 70 L28 64 L22 70 Z"/>
+    <!-- 横线（菜品） -->
+    <line x1="30" y1="26" x2="50" y2="26"/>
+    <line x1="30" y1="38" x2="50" y2="38"/>
+    <line x1="30" y1="50" x2="44" y2="50"/>
+  </g>
+</svg>

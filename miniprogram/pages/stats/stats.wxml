@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="range-tabs">
+    <view class="r-tab {{range === 'today' ? 'active' : ''}}" data-range="today" bindtap="onSwitchRange">今日</view>
+    <view class="r-tab {{range === 'week' ? 'active' : ''}}" data-range="week" bindtap="onSwitchRange">本周</view>
+    <view class="r-tab {{range === 'month' ? 'active' : ''}}" data-range="month" bindtap="onSwitchRange">本月</view>
+  </view>
+
+  <view class="hero">
+    <view class="hero-label">总营业额</view>
+    <view class="hero-value">¥{{revenue}}</view>
+  </view>
+
+  <view class="kpi-grid">
+    <view class="kpi-card">
+      <view class="kpi-label">订单数</view>
+      <view class="kpi-value">{{count}}</view>
+    </view>
+    <view class="kpi-card">
+      <view class="kpi-label">客单价</view>
+      <view class="kpi-value">¥{{avgPrice}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">收款方式</view>
+    <view class="pay-row" wx:for="{{payBreakdown}}" wx:key="label">
+      <view class="p-label">{{item.label}}</view>
+      <view class="p-bar">
+        <view class="p-bar-fill" style="width: {{item.pct}}%"></view>
+      </view>
+      <view class="p-value">¥{{item.value}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">热销榜</view>
+    <view wx:if="{{topDishes.length === 0}}" class="empty-mini">暂无数据</view>
+    <view wx:else>
+      <view class="top-row" wx:for="{{topDishes}}" wx:key="name">
+        <view class="rank rank-{{index + 1}}">{{index + 1}}</view>
+        <view class="t-name">{{item.name}}</view>
+        <view class="t-count">×{{item.count}}</view>
+        <view class="t-rev">¥{{item.revenue}}</view>
+      </view>
+    </view>
+  </view>
+</view>

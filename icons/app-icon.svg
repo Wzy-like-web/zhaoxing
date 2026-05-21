@@ -1,62 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgD" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#A0341A"/>
       <stop offset="100%" stop-color="#7A2614"/>
     </linearGradient>
-    <linearGradient id="bowl" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F5D58C"/>
-      <stop offset="100%" stop-color="#C28952"/>
-    </linearGradient>
-    <linearGradient id="soup" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FBF1E2"/>
-      <stop offset="100%" stop-color="#F5D58C"/>
-    </linearGradient>
   </defs>
 
-  <!-- 红底圆角方形 -->
-  <rect x="0" y="0" width="512" height="512" rx="120" fill="url(#bg)"/>
+  <!-- 红底 -->
+  <rect x="0" y="0" width="512" height="512" rx="120" fill="url(#bgD)"/>
 
-  <!-- 装饰小圆点 -->
-  <circle cx="100" cy="100" r="6" fill="rgba(255,255,255,0.15)"/>
-  <circle cx="412" cy="100" r="4" fill="rgba(255,255,255,0.12)"/>
-  <circle cx="100" cy="412" r="4" fill="rgba(255,255,255,0.12)"/>
-  <circle cx="412" cy="412" r="6" fill="rgba(255,255,255,0.15)"/>
-
-  <!-- 蒸汽（三股） -->
-  <g fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="10" stroke-linecap="round">
-    <path d="M180 130 Q165 165 180 200 Q195 235 180 260" />
-    <path d="M256 110 Q241 150 256 195 Q271 240 256 270" />
-    <path d="M332 130 Q347 165 332 200 Q317 235 332 260" />
+  <!-- 蒸汽（更优雅的曲线） -->
+  <g fill="none" stroke="#F5D58C" stroke-width="8" stroke-linecap="round" opacity="0.85">
+    <path d="M 200 110 Q 188 145 200 180 Q 212 215 200 245" />
+    <path d="M 256 90 Q 244 130 256 175 Q 268 220 256 260" />
+    <path d="M 312 110 Q 324 145 312 180 Q 300 215 312 245" />
   </g>
 
-  <!-- 碗（梯形） -->
-  <path d="M 96 290
-           L 416 290
-           L 388 410
-           Q 380 440 350 440
-           L 162 440
-           Q 132 440 124 410
-           Z"
-        fill="url(#bowl)"
-        stroke="#7A2614"
-        stroke-width="6"/>
+  <!-- 兆字（在蒸汽上方更高的位置） -->
+  <!-- 实际上把兆字放在最显眼位置：碗下方 -->
 
-  <!-- 汤面（椭圆） -->
-  <ellipse cx="256" cy="300" rx="168" ry="22" fill="url(#soup)"/>
-  <ellipse cx="256" cy="300" rx="168" ry="22" fill="none" stroke="#7A2614" stroke-width="6" opacity="0.5"/>
+  <!-- 简洁的碗（一笔画） -->
+  <path d="M 100 280
+           L 412 280
+           Q 412 290 408 300
+           L 380 410
+           Q 372 440 340 440
+           L 172 440
+           Q 140 440 132 410
+           L 104 300
+           Q 100 290 100 280 Z"
+        fill="#F5D58C"
+        stroke="#F5D58C"
+        stroke-width="0"/>
 
-  <!-- 羊肉块（汤里漂着的肉片） -->
-  <ellipse cx="200" cy="298" rx="22" ry="8" fill="#A0341A" opacity="0.85"/>
-  <ellipse cx="256" cy="294" rx="26" ry="9" fill="#A0341A" opacity="0.85"/>
-  <ellipse cx="316" cy="300" rx="20" ry="7" fill="#A0341A" opacity="0.85"/>
+  <!-- 碗内顶部阴影（汤面） -->
+  <ellipse cx="256" cy="290" rx="156" ry="14" fill="#7A2614" opacity="0.5"/>
 
-  <!-- 香菜点缀 -->
-  <circle cx="180" cy="295" r="4" fill="#5B7C42"/>
-  <circle cx="232" cy="290" r="3" fill="#5B7C42"/>
-  <circle cx="290" cy="296" r="4" fill="#5B7C42"/>
-  <circle cx="338" cy="293" r="3" fill="#5B7C42"/>
-
-  <!-- 碗底高光 -->
-  <ellipse cx="256" cy="430" rx="120" ry="6" fill="rgba(255,255,255,0.2)"/>
+  <!-- 兆字嵌在碗中央 -->
+  <text x="256" y="395" text-anchor="middle"
+        font-family="STKaiti, 'Songti SC', serif"
+        font-size="130"
+        font-weight="700"
+        fill="#7A2614">兆</text>
 </svg>
